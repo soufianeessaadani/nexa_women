@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Nexa Women - Votre destination shopping ultime pour la mode, la beauté et le lifestyle féminin. Découvrez des produits élégants et tendance."/>
+<meta name="keywords" content="shopping, mode, beauté, femme, vêtements, accessoires"/>
+<meta name="author" content="Nexa Women"/>
+<meta name="theme-color" content="#FF69B4"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>Nexa Women</title>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23FF69B4' width='100' height='100'/><text x='50' y='65' font-size='70' fill='white' text-anchor='middle' font-weight='bold'>N</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+
+<!-- ✅ AJOUT : Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F8F9FA;
+  --surface:#FFFFFF;
+  --surface2:#F1F3F4;
+  --border:#E0E0E0;
+  --text:#1C1C1E;
+  --muted:#6B7280;
+  --accent:#FF69B4;
+  --accent2:#9370DB;
+  --accent3:#20B2AA;
+  --accent4:#FF1493;
+  --white:#000000;
+}
+body.light-theme{
+  --bg:#0B0D11;
+  --surface:#13161C;
+  --surface2:#1C2028;
+  --border:#252830;
+  --text:#F0F2F7;
+  --muted:#7A8099;
+  --accent:#FF69B4;
+  --accent2:#9370DB;
+  --accent3:#20B2AA;
+  --accent4:#FF1493;
+  --white:#FFFFFF;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
+
+/* Custom cursor */
+.cursor{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,background .2s,width .2s,height .2s;mix-blend-mode:difference;}
+.cursor-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(255,77,109,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .08s ease,width .25s,height .25s,opacity .2s;}
+
+/* PAGE SYSTEM */
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+
+/* LANDING / AUTH PAGE */
+#page-landing{
+  display:flex;
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Animated background grid */
+.grid-bg{
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(255,77,109,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,77,109,.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+
+/* Floating orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:orbFloat 8s ease-in-out infinite;}
+.orb1{width:500px;height:500px;background:rgba(255,77,109,.15);top:-100px;left:-100px;animation-delay:0s;}
+.orb2{width:400px;height:400px;background:rgba(108,99,255,.12);bottom:-50px;right:-50px;animation-delay:3s;}
+.orb3{width:300px;height:300px;background:rgba(0,212,170,.1);top:40%;left:40%;animation-delay:5s;}
+@keyframes orbFloat{0%,100%{transform:translate(0,0);}33%{transform:translate(30px,-40px);}66%{transform:translate(-20px,20px);}}
+
+/* Landing left panel */
+.landing-left{
+  flex:1;position:relative;z-index:1;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 80px 80px 100px;
+  border-right:1px solid var(--border);
+}
+
+.brand-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.25);
+  color:var(--accent);padding:6px 16px;border-radius:999px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:36px;width:fit-content;
+  animation:badgePulse 2.5s ease-in-out infinite;
+}
+@keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 rgba(255,77,109,0);}50%{box-shadow:0 0 0 8px rgba(255,77,109,.08);}}
+
+.language-selector{
+  display:flex;gap:8px;margin-bottom:36px;
+}
+.lang-btn{
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--muted);padding:6px 12px;border-radius:8px;
+  font-size:12px;font-weight:500;cursor:pointer;
+  transition:all .3s;
+}
+.lang-btn:hover{
+  border-color:var(--accent);color:var(--text);
+}
+.lang-btn.active{
+  background:var(--accent);color:var(--white);border-color:var(--accent);
+}
+
+.landing-logo{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(60px,7vw,100px);
+  font-weight:800;
+  line-height:.95;
+  letter-spacing:-3px;
+  margin-bottom:32px;
+}
+.landing-logo .line1{display:block;}
+.landing-logo .highlight{
+  -webkit-text-stroke:2px var(--accent);
+  color:transparent;
+  display:block;
+}
+
+.landing-desc{
+  font-size:17px;line-height:1.75;color:var(--muted);
+  max-width:420px;margin-bottom:56px;
+  font-weight:300;
+}
+
+/* Floating product pills */
+.product-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px;}
+.pill{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface);border:1px solid var(--border);
+  padding:8px 16px;border-radius:999px;font-size:13px;
+  color:var(--muted);transition:all .3s;cursor:default;
+}
+.pill:hover{border-color:var(--accent);color:var(--text);}
+.pill .dot{width:6px;height:6px;border-radius:50%;}
+
+/* Stats row */
+.landing-stats{display:flex;gap:40px;}
+.l-stat-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:var(--text);display:block;}
+.l-stat-label{font-size:12px;color:var(--muted);letter-spacing:1px;}
+
+/* Landing right panel — auth */
+.landing-right{
+  width:480px;flex-shrink:0;
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px;
+  background:rgba(19,22,28,.8);
+  backdrop-filter:blur(20px);
+}
+
+.auth-tabs{
+  display:flex;gap:0;margin-bottom:40px;
+  border:1px solid var(--border);border-radius:12px;overflow:hidden;
+}
+.auth-tab{
+  flex:1;padding:14px;text-align:center;
+  background:transparent;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  color:var(--muted);transition:all .25s;
+}
+.auth-tab.active{background:var(--accent);color:white;}
+
+.auth-panel{display:none;}
+.auth-panel.active{display:block;}
+
+.auth-welcome{
+  font-family:'Syne',sans-serif;
+  font-size:28px;font-weight:700;
+  margin-bottom:8px;line-height:1.2;
+}
+.auth-sub{font-size:14px;color:var(--muted);margin-bottom:32px;}
+
+.form-group{margin-bottom:18px;}
+.form-label{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;}
+.form-input{
+  width:100%;padding:14px 18px;
+  background:var(--surface2);
+  border:1.5px solid var(--border);
+  border-radius:10px;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:15px;
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,77,109,.12);}
+.form-input::placeholder{color:var(--muted);}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+.btn-auth{
+  width:100%;padding:16px;
+  background:var(--accent);color:white;
+  border:none;border-radius:10px;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:.5px;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  margin-top:8px;
+  position:relative;overflow:hidden;
+}
+.btn-auth::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.btn-auth:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,77,109,.4);}
+.btn-auth:hover::after{opacity:1;}
+
+.auth-divider{
+  display:flex;align-items:center;gap:12px;margin:20px 0;
+  font-size:13px;color:var(--muted);
+}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* Social buttons */
+.btn-social{
+  width:100%;padding:13px;
+  background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:10px;cursor:pointer;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:border-color .2s,background .2s;margin-bottom:10px;
+}
+.btn-social:hover{border-color:var(--muted);background:var(--surface);}
+
+/* ✅ AJOUT : Style spécifique bouton Google */
+.btn-google{
+  width:100%;padding:13px;
+  background:var(--surface2);
+  border:1.5px solid var(--border);
+  border-radius:10px;cursor:pointer;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:border-color .25s,background .25s,box-shadow .25s,transform .2s;
+  margin-bottom:10px;
+  position:relative;overflow:hidden;
+}
+.btn-google:hover{
+  border-color:#4285F4;
+  background:rgba(66,133,244,.08);
+  box-shadow:0 4px 20px rgba(66,133,244,.2);
+  transform:translateY(-1px);
+}
+.btn-google:active{transform:translateY(0);}
+.btn-google .google-icon{width:18px;height:18px;flex-shrink:0;}
+.btn-google-loading{
+  display:inline-block;width:16px;height:16px;
+  border:2px solid rgba(255,255,255,.3);
+  border-top-color:var(--text);
+  border-radius:50%;
+  animation:spin360 .7s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg);}}
+
+.auth-footer{text-align:center;margin-top:20px;font-size:13px;color:var(--muted);}
+.auth-link{color:var(--accent);cursor:pointer;text-decoration:underline;}
+
+.auth-error{
+  display:none;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);
+  color:#ff8fa3;padding:12px 16px;border-radius:10px;font-size:13px;
+  margin-bottom:16px;line-height:1.5;
+}
+.auth-error.show{display:block;}
+.auth-success{
+  display:none;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.3);
+  color:var(--accent3);padding:12px 16px;border-radius:10px;font-size:13px;
+  margin-bottom:16px;
+}
+.auth-success.show{display:block;}
+
+.btn-logout{
+  padding:8px 16px;border-radius:8px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);font-size:13px;
+  cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;
+}
+.btn-logout:hover{border-color:var(--accent);color:var(--accent);}
+
+/* MAIN SHOP PAGE */
+#page-shop{display:none;}
+#page-shop.active{display:block;}
+
+/* NAVBAR */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,13,17,.9);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:0 40px;height:68px;
+}
+.nav-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px;}
+.nav-logo span{color:var(--accent);}
+.nav-menu{display:flex;gap:8px;}
+.nav-item{
+  padding:8px 16px;border-radius:8px;cursor:pointer;
+  font-size:13px;font-weight:500;color:var(--muted);
+  border:none;background:transparent;transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+}
+.nav-item:hover,.nav-item.active{color:var(--text);background:var(--surface2);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-icon-btn{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:16px;position:relative;transition:border-color .2s;
+}
+.nav-icon-btn:hover{border-color:var(--accent);}
+.badge{
+  position:absolute;top:-4px;right:-4px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--accent);color:white;
+  font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;
+}
+.user-chip{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface);border:1px solid var(--border);
+  padding:6px 14px 6px 6px;border-radius:10px;cursor:pointer;
+  font-size:13px;color:var(--muted);
+}
+.user-avatar{
+  width:28px;height:28px;border-radius:6px;
+  background:linear-gradient(135deg,var(--accent),var(--accent4));
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:white;font-family:'Syne',sans-serif;
+}
+
+/* HERO */
+.hero{
+  display:grid;grid-template-columns:1fr 400px;
+  min-height:540px;gap:0;
+  padding:0 40px;margin:24px 0;
+  align-items:center;
+}
+.hero-content{padding-right:60px;}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,184,48,.1);border:1px solid rgba(255,184,48,.25);
+  color:var(--accent2);padding:6px 14px;border-radius:999px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(44px,5vw,72px);
+  font-weight:800;line-height:1.0;
+  letter-spacing:-2px;margin-bottom:20px;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-desc{font-size:16px;color:var(--muted);line-height:1.7;max-width:480px;margin-bottom:36px;}
+.hero-btns{display:flex;gap:14px;}
+.btn-hero{
+  padding:14px 32px;border-radius:12px;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  border:none;transition:all .25s;letter-spacing:.5px;
+}
+.btn-hero-primary{background:var(--accent);color:white;}
+.btn-hero-primary:hover{box-shadow:0 8px 25px rgba(255,77,109,.4);transform:translateY(-2px);}
+.btn-hero-secondary{background:var(--surface2);color:var(--text);border:1.5px solid var(--border);}
+.btn-hero-secondary:hover{border-color:var(--muted);}
+
+/* Hero visual */
+.hero-visual{
+  position:relative;height:440px;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-ring{
+  position:absolute;border-radius:50%;border:1px solid;
+  animation:spin linear infinite;
+}
+.hero-ring:nth-child(1){width:340px;height:340px;border-color:rgba(255,77,109,.15);animation-duration:20s;}
+.hero-ring:nth-child(2){width:250px;height:250px;border-color:rgba(108,99,255,.2);animation-duration:15s;animation-direction:reverse;}
+.hero-ring:nth-child(3){width:160px;height:160px;border-color:rgba(0,212,170,.15);animation-duration:10s;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.hero-center{
+  position:relative;z-index:1;text-align:center;
+  font-size:80px;
+  filter:drop-shadow(0 0 30px rgba(255,77,109,.3));
+  animation:heroFloat 3s ease-in-out infinite;
+}
+@keyframes heroFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+/* Floating cards */
+.float-card{
+  position:absolute;background:var(--surface);
+  border:1px solid var(--border);border-radius:12px;
+  padding:10px 16px;font-size:12px;
+  display:flex;align-items:center;gap:8px;
+  animation:floatCard 3s ease-in-out infinite;
+  backdrop-filter:blur(10px);
+}
+.float-card:nth-child(5){top:10%;left:0;animation-delay:0s;}
+.float-card:nth-child(6){bottom:15%;right:0;animation-delay:1.5s;}
+.float-card .fc-icon{font-size:18px;}
+.float-card .fc-text{color:var(--muted);line-height:1.3;}
+.float-card .fc-val{color:var(--text);font-weight:600;}
+@keyframes floatCard{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+/* STATS STRIP */
+.stats-strip{
+  display:flex;justify-content:space-around;align-items:center;
+  padding:28px 40px;
+  background:var(--surface);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  margin-bottom:48px;
+}
+.stat-item{text-align:center;}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:36px;font-weight:800;
+  display:block;margin-bottom:4px;
+}
+.stat-label{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+
+/* CATEGORY FILTER */
+.section-header{padding:0 40px 24px;display:flex;align-items:baseline;justify-content:space-between;}
+.section-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:700;letter-spacing:-1px;}
+.section-link{font-size:13px;color:var(--accent);cursor:pointer;}
+
+.cat-filter{
+  display:flex;gap:10px;padding:0 40px 32px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.cat-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:999px;
+  background:var(--surface);border:1.5px solid var(--border);
+  cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;
+  font-weight:500;color:var(--muted);white-space:nowrap;
+  transition:all .2s;
+}
+.cat-btn:hover{border-color:var(--muted);color:var(--text);}
+.cat-btn.active{background:var(--accent);border-color:var(--accent);color:white;}
+.cat-btn .cat-emoji{font-size:16px;}
+
+/* PRODUCTS */
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;padding:0 40px 60px;
+}
+.product-card{
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s;
+  position:relative;
+}
+.product-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,77,109,.3);
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+.product-img{
+  height:220px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:80px;position:relative;
+  transition:transform .4s;
+}
+.product-card:hover .product-img{transform:scale(1.05);}
+.cat-tech .product-img{background:linear-gradient(135deg,#0f1729,#1a2744);}
+.cat-mode .product-img{background:linear-gradient(135deg,#1a0f1f,#2d1535);}
+.cat-sport .product-img{background:linear-gradient(135deg,#0f1a12,#122a15);}
+.cat-maison .product-img{background:linear-gradient(135deg,#1a150f,#2a1f0a);}
+.cat-beaute .product-img{background:linear-gradient(135deg,#1a0f15,#2a0f20);}
+.cat-food .product-img{background:linear-gradient(135deg,#1a150a,#241a05);}
+
+.product-badge-wrap{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap;}
+.pbadge{
+  padding:4px 10px;border-radius:999px;
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  font-family:'Syne',sans-serif;
+}
+.pbadge-new{background:rgba(0,212,170,.15);color:var(--accent3);border:1px solid rgba(0,212,170,.3);}
+.pbadge-sale{background:rgba(255,77,109,.15);color:var(--accent);border:1px solid rgba(255,77,109,.3);}
+.pbadge-hot{background:rgba(255,184,48,.15);color:var(--accent2);border:1px solid rgba(255,184,48,.3);}
+.pbadge-top{background:rgba(108,99,255,.15);color:var(--accent4);border:1px solid rgba(108,99,255,.3);}
+
+.wish-btn{
+  position:absolute;top:12px;right:12px;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(0,0,0,.5);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;transition:all .2s;opacity:0;
+}
+.product-card:hover .wish-btn{opacity:1;}
+.wish-btn:hover{background:var(--accent);border-color:var(--accent);}
+
+.product-info{padding:18px 20px 20px;}
+.product-cat{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.product-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px;line-height:1.25;}
+.product-desc{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.product-footer{display:flex;align-items:center;justify-content:space-between;}
+.price-block{display:flex;align-items:baseline;gap:8px;}
+.price{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;}
+.price-old{font-size:14px;color:var(--muted);text-decoration:line-through;}
+.rating{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--accent2);}
+.add-btn{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--accent);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;transition:transform .2s,box-shadow .2s;color:white;
+}
+.add-btn:hover{transform:scale(1.15);box-shadow:0 6px 20px rgba(255,77,109,.5);}
+
+/* PROMO STRIP */
+.promo-strip{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:20px;padding:0 40px 60px;
+}
+.promo-card{
+  border-radius:24px;overflow:hidden;
+  padding:48px;position:relative;
+  min-height:280px;display:flex;flex-direction:column;justify-content:flex-end;
+}
+.promo-card.grad1{background:linear-gradient(135deg,#1a0020,#3d006b,#6C63FF22);}
+.promo-card.grad2{background:linear-gradient(135deg,#001a0f,#00401e,#00D4AA22);}
+.promo-bg-icon{
+  position:absolute;top:-20px;right:-20px;
+  font-size:150px;opacity:.08;
+  transform:rotate(-15deg);
+}
+.promo-card h3{
+  font-family:'Syne',sans-serif;
+  font-size:32px;font-weight:800;color:white;
+  margin-bottom:8px;line-height:1.1;
+}
+.promo-card p{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:20px;}
+.btn-promo{
+  padding:12px 28px;border-radius:999px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  color:white;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;width:fit-content;
+  backdrop-filter:blur(10px);transition:background .2s;
+}
+.btn-promo:hover{background:rgba(255,255,255,.25);}
+.promo-badge{
+  position:absolute;top:24px;right:24px;
+  background:var(--accent);color:white;
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;
+  padding:12px 18px;border-radius:12px;line-height:1;
+}
+
+/* TESTIMONIALS */
+.testimonials{padding:0 40px 60px;}
+.testis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.testi-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:16px;padding:28px;
+  transition:border-color .2s;
+}
+.testi-card:hover{border-color:rgba(255,77,109,.2);}
+.testi-stars{color:var(--accent2);font-size:13px;margin-bottom:14px;}
+.testi-text{
+  font-size:15px;font-style:italic;color:rgba(240,242,247,.75);
+  line-height:1.7;margin-bottom:20px;
+  font-weight:300;
+}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:white;
+}
+.testi-name{font-size:14px;font-weight:600;}
+.testi-loc{font-size:12px;color:var(--muted);}
+
+/* NEWSLETTER */
+.newsletter{
+  margin:0 40px 60px;
+  background:linear-gradient(135deg,#1a0815,#150d1f);
+  border:1px solid var(--border);border-radius:24px;
+  padding:60px;display:grid;grid-template-columns:1fr auto;
+  gap:40px;align-items:center;position:relative;overflow:hidden;
+}
+.newsletter::before{
+  content:'✉️';position:absolute;right:200px;top:-20px;
+  font-size:120px;opacity:.05;
+}
+.newsletter h3{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;margin-bottom:10px;}
+.newsletter p{color:var(--muted);font-size:15px;}
+.newsletter-form{display:flex;gap:12px;align-items:center;}
+.newsletter-input{
+  padding:14px 20px;background:var(--surface2);
+  border:1.5px solid var(--border);border-radius:12px;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;
+  outline:none;width:280px;transition:border-color .2s;
+}
+.newsletter-input:focus{border-color:var(--accent);}
+.newsletter-input::placeholder{color:var(--muted);}
+.btn-newsletter{
+  padding:14px 28px;background:var(--accent);color:white;
+  border:none;border-radius:12px;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  transition:box-shadow .2s,transform .2s;white-space:nowrap;
+}
+.btn-newsletter:hover{box-shadow:0 8px 25px rgba(255,77,109,.4);transform:translateY(-1px);}
+
+/* FOOTER */
+.footer{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:48px 40px 32px;
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand .nav-logo{font-size:24px;margin-bottom:12px;display:block;}
+.footer-desc{font-size:14px;color:var(--muted);line-height:1.7;max-width:280px;}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;color:var(--muted);}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:10px;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s;cursor:pointer;}
+.footer-links a:hover{color:var(--text);}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:24px;border-top:1px solid var(--border);
+  font-size:13px;color:var(--muted);
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Animated grid background -->
+<div class="grid-bg"></div>
+
+<!-- ═══════════════════════════════════
+     LANDING / AUTH PAGE
+═══════════════════════════════════ -->
+<div id="page-landing" class="page active">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- LEFT PANEL -->
+  <div class="landing-left">
+    <div class="brand-badge">✦ Féminin &nbsp;·&nbsp; Élégant 2025</div>
+
+    <div class="language-selector">
+      <button class="lang-btn active" data-lang="fr">FR</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ar">AR</button>
+    </div>
+
+    <div class="landing-logo">
+      <span class="line1">NEXA</span>
+      <span class="highlight">WOMEN</span>
+    </div>
+
+    <p class="landing-desc" id="landing-desc">
+      Votre destination shopping ultime pour la mode, la beauté et le lifestyle féminin. 
+      Découvrez des produits élégants et tendance, livrés directement chez vous.
+    </p>
+
+    <div class="product-pills">
+      <div class="pill"><span class="dot" style="background:#FF69B4"></span>Mode & Accessoires</div>
+      <div class="pill"><span class="dot" style="background:#9370DB"></span>Beauté & Soins</div>
+      <div class="pill"><span class="dot" style="background:#20B2AA"></span>Maison & Déco</div>
+      <div class="pill"><span class="dot" style="background:#FF1493"></span>Sport & Bien-être</div>
+      <div class="pill"><span class="dot" style="background:#FFB6C1"></span>Tech & Gadgets</div>
+      <div class="pill"><span class="dot" style="background:#DDA0DD"></span>Bijoux & Montres</div>
+    </div>
+
+    <div class="landing-stats" id="landing-stats">
+      <div>
+        <span class="l-stat-num">2.4M+</span>
+        <span class="l-stat-label">Clients satisfaits</span>
+      </div>
+      <div>
+        <span class="l-stat-num">98K</span>
+        <span class="l-stat-label">Produits disponibles</span>
+      </div>
+      <div>
+        <span class="l-stat-num">4.9★</span>
+        <span class="l-stat-label">Note moyenne</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL — AUTH -->
+  <div class="landing-right">
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="auth-tab-login" onclick="switchTab('login')">Connexion</button>
+      <button class="auth-tab" id="auth-tab-register" onclick="switchTab('register')">Inscription</button>
+    </div>
+
+    <!-- ── LOGIN PANEL ── -->
+    <div id="panel-login" class="auth-panel active">
+      <div class="auth-welcome" id="auth-welcome">Bon retour 👋</div>
+      <div class="auth-sub" id="auth-sub">Connectez-vous pour accéder à votre espace.</div>
+
+      <div class="auth-error" id="login-error"></div>
+      <div class="auth-success" id="login-success"></div>
+
+      <div class="form-group">
+        <label class="form-label" id="label-email">Email</label>
+        <input class="form-input" type="email" id="login-email" placeholder="vous@exemple.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="label-password">Mot de passe</label>
+        <input class="form-input" type="password" id="login-password" placeholder="••••••••"/>
+      </div>
+
+      <button class="btn-auth" id="btn-login" onclick="handleLogin()">Se connecter →</button>
+
+      <div class="auth-divider" id="auth-divider-login">ou continuer avec</div>
+
+      <!-- ✅ BOUTON GOOGLE AJOUTÉ ICI -->
+      <button class="btn-google" id="btn-google-login" onclick="handleGoogleSignIn()">
+        <svg class="google-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.566 2.684-3.875 2.684-6.615z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+          <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+          <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+        </svg>
+        Se connecter avec Google
+      </button>
+
+      <div class="auth-footer">
+        Pas encore de compte ? <span class="auth-link" onclick="switchTab('register')">S'inscrire</span>
+      </div>
+    </div>
+
+    <!-- ── REGISTER PANEL ── -->
+    <div id="panel-register" class="auth-panel">
+      <div class="auth-welcome" id="auth-welcome-register">Créer un compte ✨</div>
+      <div class="auth-sub" id="auth-sub-register">Rejoignez 2.4 millions de clients satisfaits.</div>
+
+      <div class="auth-error" id="register-error"></div>
+      <div class="auth-success" id="register-success"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="label-firstname">Prénom</label>
+          <input class="form-input" type="text" id="reg-firstname" placeholder="Marie"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="label-lastname">Nom</label>
+          <input class="form-input" type="text" id="reg-lastname" placeholder="Dupont"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="label-reg-email">Email</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="vous@exemple.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="label-reg-password">Mot de passe</label>
+        <input class="form-input" type="password" id="reg-password" placeholder="Min. 8 caractères"/>
+      </div>
+
+      <button class="btn-auth" id="btn-register" onclick="handleRegister()">Créer mon compte →</button>
+
+      <div class="auth-divider" id="auth-divider-register">ou continuer avec</div>
+
+      <!-- ✅ BOUTON GOOGLE AJOUTÉ ICI AUSSI (inscription) -->
+      <button class="btn-google" id="btn-google-register" onclick="handleGoogleSignIn()">
+        <svg class="google-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.566 2.684-3.875 2.684-6.615z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+          <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+          <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+        </svg>
+        S'inscrire avec Google
+      </button>
+
+      <div class="auth-footer" id="auth-footer-register">
+        Déjà un compte ? <span class="auth-link" onclick="switchTab('login')">Se connecter</span>
+      </div>
+    </div>
+
+    <!-- Élément caché pour Google Identity Services -->
+    <div id="g_id_onload"
+         data-client_id="119031624949-pok23ei36h5nhl7hej6s91n96i99q1ns.apps.googleusercontent.com"
+         data-callback="handleGoogleResponse"
+         data-auto_select="false"
+         style="display:none">
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     MAIN SHOP PAGE
+═══════════════════════════════════ -->
+<div id="page-shop" class="page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">NEX<span>MART</span></div>
+    <div class="nav-menu">
+      <button class="nav-item active" id="nav-accueil">Accueil</button>
+      <button class="nav-item" id="nav-nouveautes">Nouveautés</button>
+      <button class="nav-item" id="nav-promotions">Promotions</button>
+      <button class="nav-item" id="nav-marques">Marques</button>
+      <button class="nav-item" id="nav-contact">Contact</button>
+    </div>
+    <div class="nav-right">
+      <div class="nav-icon-btn" title="Rechercher">🔍</div>
+      <div class="nav-icon-btn" title="Favoris">♡</div>
+      <div class="nav-icon-btn" title="Panier">
+        🛒
+        <span class="badge" id="cart-badge">0</span>
+      </div>
+      <div class="user-chip" id="user-chip">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <span id="user-name-nav">Mon compte</span>
+      </div>
+      <button class="btn-logout" id="btn-logout" onclick="handleLogout()">Déconnexion</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag" id="hero-tag">🔥 Offres flash — Jusqu'à -60%</div>
+      <h1 id="hero-title">
+        Tout ce que<br>
+        vous <span class="grad">désirez</span>,<br>
+        livré demain.
+      </h1>
+      <p class="hero-desc" id="hero-desc">
+        Découvrez notre sélection de milliers de produits premium dans tous les univers.
+        Livraison gratuite dès 49€ · Retours 30 jours · Paiement sécurisé.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-hero btn-hero-primary" id="btn-explorer">Explorer les offres</button>
+        <button class="btn-hero btn-hero-secondary" id="btn-nouveautes">Nouveautés →</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-center">🛍️</div>
+      <div class="float-card">
+        <span class="fc-icon">📦</span>
+        <div class="fc-text">Livraison express<br><span class="fc-val">En 24h chrono</span></div>
+      </div>
+      <div class="float-card">
+        <span class="fc-icon">⭐</span>
+        <div class="fc-text">Note moyenne<br><span class="fc-val">4.9 / 5</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip" id="stats-strip">
+    <div class="stat-item">
+      <span class="stat-num" style="color:var(--accent)">2.4M+</span>
+      <span class="stat-label">Clients satisfaits</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="color:var(--accent2)">98K</span>
+      <span class="stat-label">Produits disponibles</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="color:var(--accent3)">24h</span>
+      <span class="stat-label">Livraison express</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="color:var(--accent4)">4.9★</span>
+      <span class="stat-label">Note moyenne</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="color:var(--accent)">30j</span>
+      <span class="stat-label">Retours gratuits</span>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section-header">
+    <div class="section-title" id="section-title">Produits populaires</div>
+    <span class="section-link" id="section-link">Voir tout →</span>
+  </div>
+
+  <div class="cat-filter">
+    <button class="cat-btn active" id="cat-all" onclick="filterCat(this,'all')"><span class="cat-emoji">✨</span>Tout</button>
+    <button class="cat-btn" id="cat-tech" onclick="filterCat(this,'tech')"><span class="cat-emoji">💻</span>Technologie</button>
+    <button class="cat-btn" id="cat-mode" onclick="filterCat(this,'mode')"><span class="cat-emoji">👗</span>Mode</button>
+    <button class="cat-btn" id="cat-sport" onclick="filterCat(this,'sport')"><span class="cat-emoji">🏃</span>Sport</button>
+    <button class="cat-btn" id="cat-maison" onclick="filterCat(this,'maison')"><span class="cat-emoji">🏠</span>Maison</button>
+    <button class="cat-btn" id="cat-beaute" onclick="filterCat(this,'beaute')"><span class="cat-emoji">✨</span>Beauté</button>
+    <button class="cat-btn" id="cat-food" onclick="filterCat(this,'food')"><span class="cat-emoji">🍷</span>Food</button>
+  </div>
+
+  <div class="products-grid" id="products-grid"></div>
+
+  <!-- PROMO STRIP -->
+  <div class="promo-strip">
+    <div class="promo-card grad1">
+      <div class="promo-bg-icon">💻</div>
+      <span class="promo-badge">-40%</span>
+      <h3 id="promo-tech-title">Tech Week</h3>
+      <p id="promo-tech-desc">Les meilleures offres tech de la saison. Stocks limités !</p>
+      <button class="btn-promo" id="btn-promo-tech">Découvrir →</button>
+    </div>
+    <div class="promo-card grad2">
+      <div class="promo-bg-icon">🌿</div>
+      <h3 id="promo-eco-title">Collection Éco</h3>
+      <p id="promo-eco-desc">Produits durables et responsables. Pour vous, pour la planète.</p>
+      <button class="btn-promo" id="btn-promo-eco">Explorer →</button>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="testimonials">
+    <div class="section-header" style="padding:0 0 24px">
+      <div class="section-title" id="testimonials-title">Ils nous font confiance</div>
+    </div>
+    <div class="testis-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Livraison ultra rapide, produits conformes à la description. Je recommande sans hésiter ! Le service client est aussi très réactif."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#FF4D6D,#FF8C42)">S</div>
+          <div>
+            <div class="testi-name">Sophie M.</div>
+            <div class="testi-loc">Paris, France</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text" id="testi-text-main">"J'achète régulièrement sur Nexa Women. Les prix sont imbattables et la qualité au rendez-vous. Mon shop préféré !"</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#6C63FF,#00D4AA)">T</div>
+          <div>
+            <div class="testi-name">Thomas B.</div>
+            <div class="testi-loc">Lyon, France</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★☆</div>
+        <div class="testi-text">"Très bonne expérience d'achat. L'interface est magnifique et intuitive. J'ai trouvé ce que je cherchais en 2 minutes."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#FFB830,#FF4D6D)">A</div>
+          <div>
+            <div class="testi-name">Amélie D.</div>
+            <div class="testi-loc">Bordeaux, France</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter">
+    <div>
+      <h3>Restez dans la boucle 📬</h3>
+      <p>Offres exclusives, nouvelles collections, ventes flash — directement dans votre boîte mail.</p>
+    </div>
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="votre@email.com"/>
+      <button class="btn-newsletter">S'abonner</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-logo">NEX<span>MART</span></span>
+        <p class="footer-desc" id="footer-desc">La boutique universelle où chaque produit raconte une histoire. Livraison rapide, qualité garantie.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Boutique</h4>
+        <ul class="footer-links">
+          <li><a>Nouveautés</a></li>
+          <li><a>Promotions</a></li>
+          <li><a>Meilleures ventes</a></li>
+          <li><a>Marques</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Service</h4>
+        <ul class="footer-links">
+          <li><a>Mon compte</a></li>
+          <li><a>Mes commandes</a></li>
+          <li><a>Livraison</a></li>
+          <li><a>Retours</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <ul class="footer-links">
+          <li><a>CGV</a></li>
+          <li><a>Confidentialité</a></li>
+          <li><a>Cookies</a></li>
+          <li><a>Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-copyright">© 2025 Nexa Women. Tous droits réservés.</span>
+      <span>Fait avec ❤️ en France</span>
+    </div>
+  </footer>
+
+</div><!-- end page-shop -->
+
+<script>
+const translations = {
+  fr: {
+    title: "Nexa Women",
+    desc: "Votre destination shopping ultime pour la mode, la beauté et le lifestyle féminin. Découvrez des produits élégants et tendance, livrés directement chez vous.",
+    categories: ["Mode & Accessoires", "Beauté & Soins", "Maison & Déco", "Sport & Bien-être", "Tech & Gadgets", "Bijoux & Montres"],
+    stats: ["Clients satisfaits", "Produits disponibles", "Note moyenne"],
+    testi: "\"J'achète régulièrement sur Nexa Women. Les prix sont imbattables et la qualité au rendez-vous. Mon shop préféré !\"",
+    copyright: "© 2025 Nexa Women. Tous droits réservés.",
+    nav: {
+      accueil: "Accueil",
+      nouveautes: "Nouveautés",
+      promotions: "Promotions",
+      marques: "Marques",
+      contact: "Contact",
+      userName: "Mon compte",
+      logout: "Déconnexion"
+    },
+    auth: {
+      tabLogin: "Connexion",
+      tabRegister: "Inscription",
+      welcomeLogin: "Bon retour 👋",
+      subLogin: "Connectez-vous pour accéder à votre espace.",
+      labelEmail: "Email",
+      labelPassword: "Mot de passe",
+      btnLogin: "Se connecter →",
+      divider: "ou continuer avec",
+      welcomeRegister: "Créer un compte ✨",
+      subRegister: "Rejoignez 2.4 million de clients satisfaits.",
+      labelFirstname: "Prénom",
+      labelLastname: "Nom",
+      labelRegEmail: "Email",
+      labelRegPassword: "Mot de passe",
+      btnRegister: "Créer mon compte →",
+      footerRegister: "Déjà un compte ? <span class=\"auth-link\" onclick=\"switchTab('login')\">Se connecter</span>"
+    },
+    shop: {
+      heroTag: "🔥 Offres flash — Jusqu'à -60%",
+      heroTitle: "Everything you<br><span class=\"grad\">desire</span>,<br>delivered tomorrow.",
+      heroDesc: "Discover our selection of thousands of premium products in all categories. Free shipping from €49 · 30-day returns · Secure payment.",
+      btnExplorer: "Explore offers",
+      btnNouveautes: "New Arrivals →",
+      sectionTitle: "Popular Products",
+      sectionLink: "See all →",
+      catAll: "All",
+      catTech: "Technology",
+      catMode: "Fashion",
+      catSport: "Sport",
+      catMaison: "Home",
+      catBeaute: "Beauty",
+      catFood: "Food",
+      promoTechTitle: "Tech Week",
+      promoTechDesc: "The best tech deals of the season. Limited stock!",
+      btnPromoTech: "Discover →",
+      promoEcoTitle: "Eco Collection",
+      promoEcoDesc: "Sustainable and responsible products. For you, for the planet.",
+      btnPromoEco: "Explore →",
+      testimonialsTitle: "They trust us",
+      footerDesc: "The universal store where every product tells a story. Fast delivery, guaranteed quality."
+    }
+  },
+  en: {
+    title: "Nexa Women",
+    desc: "Your ultimate shopping destination for fashion, beauty and women's lifestyle. Discover elegant and trendy products, delivered right to your door.",
+    categories: ["Fashion & Accessories", "Beauty & Care", "Home & Deco", "Sport & Wellness", "Tech & Gadgets", "Jewelry & Watches"],
+    stats: ["Satisfied Customers", "Available Products", "Average Rating"],
+    testi: "\"I regularly shop at Nexa Women. The prices are unbeatable and the quality is there. My favorite shop!\"",
+    copyright: "© 2025 Nexa Women. All rights reserved.",
+    nav: {
+      accueil: "Home",
+      nouveautes: "New Arrivals",
+      promotions: "Promotions",
+      marques: "Brands",
+      contact: "Contact",
+      userName: "My Account",
+      logout: "Logout"
+    },
+    auth: {
+      tabLogin: "Login",
+      tabRegister: "Sign Up",
+      welcomeLogin: "Welcome back 👋",
+      subLogin: "Log in to access your account.",
+      labelEmail: "Email",
+      labelPassword: "Password",
+      btnLogin: "Log in →",
+      divider: "or continue with",
+      welcomeRegister: "Create an account ✨",
+      subRegister: "Join 2.4 million satisfied customers.",
+      labelFirstname: "First Name",
+      labelLastname: "Last Name",
+      labelRegEmail: "Email",
+      labelRegPassword: "Password",
+      btnRegister: "Create my account →",
+      footerRegister: "Already have an account? <span class=\"auth-link\" onclick=\"switchTab('login')\">Log in</span>"
+    },
+    shop: {
+      heroTag: "🔥 Flash Sales — Up to -60%",
+      heroTitle: "Everything you<br><span class=\"grad\">desire</span>,<br>delivered tomorrow.",
+      heroDesc: "Discover our selection of thousands of premium products in all categories. Free shipping from €49 · 30-day returns · Secure payment.",
+      btnExplorer: "Explore offers",
+      btnNouveautes: "New Arrivals →",
+      sectionTitle: "Popular Products",
+      sectionLink: "See all →",
+      catAll: "All",
+      catTech: "Technology",
+      catMode: "Fashion",
+      catSport: "Sport",
+      catMaison: "Home",
+      catBeaute: "Beauty",
+      catFood: "Food",
+      promoTechTitle: "Tech Week",
+      promoTechDesc: "The best tech deals of the season. Limited stock!",
+      btnPromoTech: "Discover →",
+      promoEcoTitle: "Eco Collection",
+      promoEcoDesc: "Sustainable and responsible products. For you, for the planet.",
+      btnPromoEco: "Explore →",
+      testimonialsTitle: "They trust us",
+      footerDesc: "The universal store where every product tells a story. Fast delivery, guaranteed quality."
+    }
+  },
+  ar: {
+    title: "نيكسا وومن",
+    desc: "وجهتك النهائية للتسوق في الموضة والجمال وأسلوب حياة المرأة. اكتشفي منتجات أنيقة وعصرية، يتم تسليمها مباشرة إلى باب منزلك.",
+    categories: ["الموضة والإكسسوارات", "الجمال والعناية", "المنزل والديكور", "الرياضة والعافية", "التكنولوجيا والأدوات", "المجوهرات والساعات"],
+    stats: ["عملاء راضون", "منتجات متوفرة", "التقييم المتوسط"],
+    testi: "\"أشتري بانتظام من نيكسا وومن. الأسعار لا تُقهر والجودة موجودة. متجري المفضل!\"",
+    copyright: "© 2025 نيكسا وومن. جميع الحقوق محفوظة.",
+    nav: {
+      accueil: "الرئيسية",
+      nouveautes: "الجديد",
+      promotions: "العروض",
+      marques: "العلامات التجارية",
+      contact: "اتصل بنا",
+      userName: "حسابي",
+      logout: "تسجيل الخروج"
+    },
+    auth: {
+      tabLogin: "تسجيل الدخول",
+      tabRegister: "التسجيل",
+      welcomeLogin: "مرحباً بعودتك 👋",
+      subLogin: "سجل الدخول للوصول إلى حسابك.",
+      labelEmail: "البريد الإلكتروني",
+      labelPassword: "كلمة المرور",
+      btnLogin: "تسجيل الدخول →",
+      divider: "أو المتابعة بـ",
+      welcomeRegister: "إنشاء حساب ✨",
+      subRegister: "انضم إلى 2.4 مليون عميل راضٍ.",
+      labelFirstname: "الاسم الأول",
+      labelLastname: "الاسم الأخير",
+      labelRegEmail: "البريد الإلكتروني",
+      labelRegPassword: "كلمة المرور",
+      btnRegister: "إنشاء حسابي →",
+      footerRegister: "لديك حساب بالفعل؟ <span class=\"auth-link\" onclick=\"switchTab('login')\">تسجيل الدخول</span>"
+    },
+    shop: {
+      heroTag: "🔥 عروض فلاش — حتى -60%",
+      heroTitle: "كل ما<br><span class=\"grad\">تريده</span>,<br>يتم تسليمه غداً.",
+      heroDesc: "اكتشف مجموعتنا من آلاف المنتجات المميزة في جميع الفئات. شحن مجاني من 49 يورو · إرجاع 30 يوماً · دفع آمن.",
+      btnExplorer: "استكشف العروض",
+      btnNouveautes: "الجديد →",
+      sectionTitle: "المنتجات الشائعة",
+      sectionLink: "عرض الكل →",
+      catAll: "الكل",
+      catTech: "التكنولوجيا",
+      catMode: "الموضة",
+      catSport: "الرياضة",
+      catMaison: "المنزل",
+      catBeaute: "الجمال",
+      catFood: "الطعام",
+      promoTechTitle: "أسبوع التكنولوجيا",
+      promoTechDesc: "أفضل عروض التكنولوجيا لهذا الموسم. مخزون محدود!",
+      btnPromoTech: "اكتشف →",
+      promoEcoTitle: "مجموعة إيكو",
+      promoEcoDesc: "منتجات مستدامة ومسؤولة. لك، للكوكب.",
+      btnPromoEco: "استكشف →",
+      testimonialsTitle: "يثقون بنا",
+      footerDesc: "المتجر العالمي حيث يروي كل منتج قصة. تسليم سريع، جودة مضمونة."
+    }
+  }
+};
+
+function setLanguage(lang) {
+  document.title = translations[lang].title;
+  // Landing
+  document.getElementById('landing-desc').innerText = translations[lang].desc;
+  const pills = document.querySelectorAll('.product-pills .pill');
+  translations[lang].categories.forEach((cat, i) => {
+    if (pills[i]) {
+      const dot = pills[i].querySelector('.dot');
+      pills[i].innerHTML = dot.outerHTML + cat;
+    }
+  });
+  const statLabels = document.querySelectorAll('#landing-stats .l-stat-label');
+  translations[lang].stats.forEach((stat, i) => {
+    if (statLabels[i]) statLabels[i].innerText = stat;
+  });
+  document.getElementById('testi-text-main').innerText = translations[lang].testi;
+  document.getElementById('footer-copyright').innerText = translations[lang].copyright;
+  // Nav
+  document.getElementById('nav-accueil').innerText = translations[lang].nav.accueil;
+  document.getElementById('nav-nouveautes').innerText = translations[lang].nav.nouveautes;
+  document.getElementById('nav-promotions').innerText = translations[lang].nav.promotions;
+  document.getElementById('nav-marques').innerText = translations[lang].nav.marques;
+  document.getElementById('nav-contact').innerText = translations[lang].nav.contact;
+  document.getElementById('user-name-nav').innerText = translations[lang].nav.userName;
+  document.getElementById('btn-logout').innerText = translations[lang].nav.logout;
+  // Auth
+  document.getElementById('auth-tab-login').innerText = translations[lang].auth.tabLogin;
+  document.getElementById('auth-tab-register').innerText = translations[lang].auth.tabRegister;
+  document.getElementById('auth-welcome').innerText = translations[lang].auth.welcomeLogin;
+  document.getElementById('auth-sub').innerText = translations[lang].auth.subLogin;
+  document.getElementById('label-email').innerText = translations[lang].auth.labelEmail;
+  document.getElementById('label-password').innerText = translations[lang].auth.labelPassword;
+  document.getElementById('btn-login').innerText = translations[lang].auth.btnLogin;
+  document.getElementById('auth-divider-login').innerText = translations[lang].auth.divider;
+  document.getElementById('auth-welcome-register').innerText = translations[lang].auth.welcomeRegister;
+  document.getElementById('auth-sub-register').innerText = translations[lang].auth.subRegister;
+  document.getElementById('label-firstname').innerText = translations[lang].auth.labelFirstname;
+  document.getElementById('label-lastname').innerText = translations[lang].auth.labelLastname;
+  document.getElementById('label-reg-email').innerText = translations[lang].auth.labelRegEmail;
+  document.getElementById('label-reg-password').innerText = translations[lang].auth.labelRegPassword;
+  document.getElementById('btn-register').innerText = translations[lang].auth.btnRegister;
+  document.getElementById('auth-divider-register').innerText = translations[lang].auth.divider;
+  document.getElementById('auth-footer-register').innerHTML = translations[lang].auth.footerRegister;
+  // Shop
+  document.getElementById('hero-tag').innerText = translations[lang].shop.heroTag;
+  document.getElementById('hero-title').innerHTML = translations[lang].shop.heroTitle;
+  document.getElementById('hero-desc').innerText = translations[lang].shop.heroDesc;
+  document.getElementById('btn-explorer').innerText = translations[lang].shop.btnExplorer;
+  document.getElementById('btn-nouveautes').innerText = translations[lang].shop.btnNouveautes;
+  document.getElementById('section-title').innerText = translations[lang].shop.sectionTitle;
+  document.getElementById('section-link').innerText = translations[lang].shop.sectionLink;
+  document.getElementById('cat-all').innerText = translations[lang].shop.catAll;
+  document.getElementById('cat-tech').innerText = translations[lang].shop.catTech;
+  document.getElementById('cat-mode').innerText = translations[lang].shop.catMode;
+  document.getElementById('cat-sport').innerText = translations[lang].shop.catSport;
+  document.getElementById('cat-maison').innerText = translations[lang].shop.catMaison;
+  document.getElementById('cat-beaute').innerText = translations[lang].shop.catBeaute;
+  document.getElementById('cat-food').innerText = translations[lang].shop.catFood;
+  const statStripLabels = document.querySelectorAll('#stats-strip .stat-label');
+  translations[lang].stats.forEach((stat, i) => {
+    if (statStripLabels[i]) statStripLabels[i].innerText = stat;
+  });
+  document.getElementById('promo-tech-title').innerText = translations[lang].shop.promoTechTitle;
+  document.getElementById('promo-tech-desc').innerText = translations[lang].shop.promoTechDesc;
+  document.getElementById('btn-promo-tech').innerText = translations[lang].shop.btnPromoTech;
+  document.getElementById('promo-eco-title').innerText = translations[lang].shop.promoEcoTitle;
+  document.getElementById('promo-eco-desc').innerText = translations[lang].shop.promoEcoDesc;
+  document.getElementById('btn-promo-eco').innerText = translations[lang].shop.btnPromoEco;
+  document.getElementById('testimonials-title').innerText = translations[lang].shop.testimonialsTitle;
+  document.getElementById('footer-desc').innerText = translations[lang].shop.footerDesc;
+  if (lang === 'ar') {
+    document.body.dir = 'rtl';
+  } else {
+    document.body.dir = 'ltr';
+  }
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const lang = btn.getAttribute('data-lang');
+    setLanguage(lang);
+  });
+});
+
+/* ═══════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════ */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 80);
+});
+
+/* ═══════════════════════════════════
+   AUTH — TABS
+═══════════════════════════════════ */
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t,i) => {
+    t.classList.toggle('active', (tab==='login' && i===0)||(tab==='register' && i===1));
+  });
+  document.getElementById('panel-login').classList.toggle('active', tab==='login');
+  document.getElementById('panel-register').classList.toggle('active', tab==='register');
+}
+
+/* ═══════════════════════════════════
+   AUTH — EMAIL / PASSWORD (démo)
+═══════════════════════════════════ */
+let currentUser = null;
+let cartCount = 0;
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 4000);
+}
+function showSuccess(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.classList.add('show');
+}
+
+function handleLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-password').value;
+  if (!email || !pass) return showError('login-error','Veuillez remplir tous les champs.');
+  if (!email.includes('@')) return showError('login-error','Email invalide.');
+  currentUser = { name: email.split('@')[0], email, avatar: email[0].toUpperCase() };
+  showSuccess('login-success', '✓ Connexion réussie ! Bienvenue 👋');
+  setTimeout(showShop, 1000);
+}
+
+function handleRegister() {
+  const fn = document.getElementById('reg-firstname').value.trim();
+  const ln = document.getElementById('reg-lastname').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-password').value;
+  if (!fn||!ln||!email||!pass) return showError('register-error','Veuillez remplir tous les champs.');
+  if (!email.includes('@')) return showError('register-error','Email invalide.');
+  if (pass.length < 8) return showError('register-error','Le mot de passe doit faire au moins 8 caractères.');
+  currentUser = { name: fn + ' ' + ln, email, avatar: fn[0].toUpperCase() };
+  showSuccess('register-success', '✓ Compte créé avec succès !');
+  setTimeout(showShop, 1000);
+}
+
+function handleLogout() {
+  currentUser = null;
+  document.getElementById('page-shop').classList.remove('active');
+  document.getElementById('page-landing').classList.add('active');
+  // Réinitialise les formulaires
+  ['login-email','login-password'].forEach(id => document.getElementById(id).value='');
+  ['reg-firstname','reg-lastname','reg-email','reg-password'].forEach(id => document.getElementById(id).value='');
+  ['login-success','login-error','register-success','register-error'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+}
+
+function showShop() {
+  document.getElementById('page-landing').classList.remove('active');
+  document.getElementById('page-shop').classList.add('active');
+  if (currentUser) {
+    document.getElementById('user-avatar').textContent = currentUser.avatar;
+    document.getElementById('user-name-nav').textContent = currentUser.name;
+  }
+}
+
+/* ═══════════════════════════════════
+   ✅ GOOGLE SIGN-IN
+═══════════════════════════════════ */
+const GOOGLE_CLIENT_ID = '119031624949-pok23ei36h5nhl7hej6s91n96i99q1ns.apps.googleusercontent.com';
+
+function googleBtnSVG(label) {
+  return `<svg class="google-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.566 2.684-3.875 2.684-6.615z"/>
+    <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+    <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+    <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+  </svg> ${label}`;
+}
+
+function handleGoogleSignIn() {
+  const btns = document.querySelectorAll('.btn-google');
+
+  if (typeof google === 'undefined') {
+    showError('login-error', '⚠️ Librairie Google non chargée. Vérifiez votre connexion internet.');
+    showError('register-error', '⚠️ Librairie Google non chargée. Vérifiez votre connexion internet.');
+    return;
+  }
+
+  btns.forEach(btn => {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-google-loading"></span>&nbsp; Connexion en cours...';
+  });
+
+  try {
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleGoogleResponse,
+      ux_mode: 'popup',
+      cancel_on_tap_outside: false
+    });
+
+    google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        const tempDiv = document.createElement('div');
+        tempDiv.style.display = 'none';
+        document.body.appendChild(tempDiv);
+
+        google.accounts.id.renderButton(tempDiv, {
+          type: 'standard',
+          theme: 'outline',
+          size: 'large',
+          callback: handleGoogleResponse
+        });
+
+        const renderedBtn = tempDiv.querySelector('[role="button"], button, div[tabindex]');
+        if (renderedBtn) {
+          renderedBtn.click();
+        } else {
+          const oauth2Url = `https://accounts.google.com/o/oauth2/v2/auth?` +
+            `client_id=${GOOGLE_CLIENT_ID}` +
+            `&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}` +
+            `&response_type=token` +
+            `&scope=email%20profile` +
+            `&prompt=select_account`;
+          window.open(oauth2Url, '_blank', 'width=500,height=600,scrollbars=yes');
+        }
+
+        btns.forEach(btn => {
+          btn.disabled = false;
+          const label = btn.id === 'btn-google-register'
+            ? "S'inscrire avec Google"
+            : "Se connecter avec Google";
+          btn.innerHTML = googleBtnSVG(label);
+        });
+      }
+    });
+
+  } catch(err) {
+    console.error('Google Sign-In error:', err);
+    btns.forEach(btn => {
+      btn.disabled = false;
+      const label = btn.id === 'btn-google-register'
+        ? "S'inscrire avec Google"
+        : "Se connecter avec Google";
+      btn.innerHTML = googleBtnSVG(label);
+    });
+    showError('login-error', '⚠️ Erreur Google. Autorisez les popups dans votre navigateur.');
+    showError('register-error', '⚠️ Erreur Google. Autorisez les popups dans votre navigateur.');
+  }
+}
+
+function handleGoogleResponse(response) {
+  // Décoder le JWT token Google
+  const payload = parseJwt(response.credential);
+
+  currentUser = {
+    name: payload.name || payload.email.split('@')[0],
+    email: payload.email,
+    avatar: (payload.given_name || payload.email)[0].toUpperCase()
+  };
+
+  // Afficher le message de succès
+  showSuccess('login-success', `✓ Connecté avec Google : ${payload.email} 🎉`);
+  showSuccess('register-success', `✓ Compte Google lié : ${payload.email} 🎉`);
+
+  setTimeout(showShop, 1200);
+
+  // 🔒 En production — envoyer le token à votre serveur pour vérification :
+  // fetch('/api/auth/google', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({ token: response.credential })
+  // });
+}
+
+function parseJwt(token) {
+  try {
+    const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+    return JSON.parse(atob(base64));
+  } catch(e) {
+    return { name:'Utilisateur', email:'user@google.com' };
+  }
+}
+
+function restoreGoogleBtn(btn) {
+  btn.innerHTML = googleBtnSVG('Se connecter avec Google');
+}
+
+/* ═══════════════════════════════════
+   PRODUCTS
+═══════════════════════════════════ */
+const products = [
+  {id:1,cat:'tech',emoji:'💻',name:'MacBook Air M3',desc:'Puce M3, 16 Go RAM, autonomie 18h',price:'1 299',old:'1 499',rating:'4.9',badges:['hot']},
+  {id:2,cat:'tech',emoji:'🎧',name:'Sony WH-1000XM5',desc:'Réduction de bruit active, 30h autonomie',price:'279',old:'349',rating:'4.8',badges:['sale']},
+  {id:3,cat:'tech',emoji:'📱',name:'iPhone 15 Pro',desc:'Titane, puce A17 Pro, appareil photo 48Mp',price:'1 199',old:null,rating:'4.9',badges:['new']},
+  {id:4,cat:'tech',emoji:'⌚',name:'Apple Watch Ultra 2',desc:'GPS précis, 60h autonomie, titane',price:'899',old:null,rating:'4.7',badges:['top']},
+  {id:5,cat:'mode',emoji:'👗',name:'Robe Midi Fleurie',desc:'100% coton bio, coupe fluide, tailles XS-XXL',price:'89',old:'120',rating:'4.6',badges:['new','sale']},
+  {id:6,cat:'mode',emoji:'👟',name:'Nike Air Max 270',desc:'Amorti Air max, mesh respirant',price:'149',old:'180',rating:'4.8',badges:['hot']},
+  {id:7,cat:'sport',emoji:'🏋️',name:'Haltères Ajustables',desc:'2×32 kg, réglage rapide, poignée ergonomique',price:'299',old:'399',rating:'4.7',badges:['sale']},
+  {id:8,cat:'sport',emoji:'🚴',name:'Vélo Électrique Pro',desc:'250W, 80 km autonomie, 7 vitesses',price:'1 499',old:'1 899',rating:'4.9',badges:['top','sale']},
+  {id:9,cat:'maison',emoji:'🛋️',name:'Canapé Scandinave',desc:'Tissu bouclette, pieds chêne, 3 places',price:'799',old:'1 099',rating:'4.5',badges:['sale']},
+  {id:10,cat:'maison',emoji:'💡',name:'Lampe Design Arc',desc:'LED dimmable, base marbre, bras rotatif',price:'189',old:null,rating:'4.7',badges:['new']},
+  {id:11,cat:'beaute',emoji:'✨',name:'Sérum Vitamine C',desc:'30ml, éclat garanti, peaux mixtes à grasses',price:'49',old:'65',rating:'4.8',badges:['hot']},
+  {id:12,cat:'food',emoji:'🍷',name:'Coffret Grands Crus',desc:'6 bouteilles sélectionnées par nos sommeliers',price:'129',old:null,rating:'4.9',badges:['top']},
+];
+
+function renderProducts(list) {
+  const grid = document.getElementById('products-grid');
+  grid.innerHTML = list.map(p => `
+    <div class="product-card cat-${p.cat}" onclick="addToCart()">
+      <div class="product-img">
+        <div class="product-badge-wrap">
+          ${p.badges.map(b=>`<span class="pbadge pbadge-${b}">${b==='new'?'Nouveau':b==='sale'?'Promo':b==='hot'?'Populaire':'Top'}</span>`).join('')}
+        </div>
+        <button class="wish-btn" onclick="event.stopPropagation()">♡</button>
+        ${p.emoji}
+      </div>
+      <div class="product-info">
+        <div class="product-cat">${p.cat}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="price-block">
+            <span class="price">${p.price}€</span>
+            ${p.old?`<span class="price-old">${p.old}€</span>`:''}
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="rating">★ ${p.rating}</span>
+            <button class="add-btn" onclick="event.stopPropagation();addToCart()">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCat(btn, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat==='all' ? products : products.filter(p=>p.cat===cat));
+}
+
+function addToCart() {
+  cartCount++;
+  document.getElementById('cart-badge').textContent = cartCount;
+}
+
+/* Init */
+renderProducts(products);
+</script>
+</body>
+</html>
