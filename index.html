@@ -806,7 +806,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-logo">NEX<span>MART</span></div>
-    <div class="nav-menu">
+    <!-- Ajout hamburger -->
+    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
       <button class="nav-item active" id="nav-accueil">Accueil</button>
       <button class="nav-item" id="nav-nouveautes">Nouveautés</button>
       <button class="nav-item" id="nav-promotions">Promotions</button>
